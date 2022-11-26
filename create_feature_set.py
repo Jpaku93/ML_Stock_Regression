@@ -282,9 +282,3 @@ def define_indicators_features(MES):
     MES = COPP(MES, period=14)
     return  MES
     
-# get sample data range
-
-data = pd.read_csv("MES 06-21.Last.txt", names=['time', 'open', 'high', 'low', 'close', 'volume'], 
-                   delimiter = ";", index_col='time')[-3000:]
-
-define_indicators_features(data)
