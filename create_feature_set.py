@@ -282,7 +282,4 @@ def define_indicators_features(MES):
     MES = TSI(MES, r=25, s=13, column='close')
     MES = ULTOSC(MES)
     MES = COPP(MES, period=14)
-    # save the data to a csv file
-    # set index to time
-    MES.index = call_data()[-100:].index
     return  MES
