@@ -239,8 +239,8 @@ def COPP(data, period=14):
     data['COPP'] = pd.Series(ROC1 + ROC2, name='COPP').ewm(span=10, min_periods=9).mean()
     return data
 
-def call_data():
-    df = pd.read_csv("MES 06-21.Last.txt", names=['time', 'open', 'high', 'low', 'close', 'volume'], delimiter = ";",)
+def call_data(URL): ## 
+    df = pd.read_csv(URL, names=['time', 'open', 'high', 'low', 'close', 'volume'], delimiter = ";",)
     df.time = pd.to_datetime(df.time, format = '%Y.%m.%d %H:%M:%S.%f')
     df.set_index("time", inplace=True)  # set time as index so we can join them on this shared time\ 
     df = df.drop_duplicates()
@@ -252,7 +252,7 @@ def define_indicators_features(MES):
     MD = MACD( MES, 12, 26, 9)
     for i in MD.iloc[:,-4:].columns:
         MES[i] = MD[i]
-
+    
     sma21 = SMA(MES, period=21, column='close').to_frame()
     sma50 = SMA(MES, period=50, column='close').to_frame()
 
