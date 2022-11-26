@@ -3,13 +3,6 @@ import numpy as np
 from datetime import datetime
 import matplotlib.pyplot as plt
 
-def get_data(url):
-    pd.read_csv(url, names=['time', 'open', 'high', 'low', 'close', 'volume'], delimiter = ";", index_col='time')
-    df.time = pd.to_datetime(df.time, format = '%Y.%m.%d %H:%M:%S.%f')
-    df.set_index("time", inplace=True)  # set time as index so we can join them on this shared time\ 
-    df = df.drop_duplicates()
-    return df
-
 # create a function to calculate the simple moving average
 def SMA(data, period=30, column='close'):
     return data[column].rolling(window=period).mean()
@@ -246,6 +239,14 @@ def COPP(data, period=14):
     data['COPP'] = pd.Series(ROC1 + ROC2, name='COPP').ewm(span=10, min_periods=9).mean()
     return data
 
+def call_data():
+    df = pd.read_csv("MES 06-21.Last.txt", names=['time', 'open', 'high', 'low', 'close', 'volume'], delimiter = ";",)
+    df.time = pd.to_datetime(df.time, format = '%Y.%m.%d %H:%M:%S.%f')
+    df.set_index("time", inplace=True)  # set time as index so we can join them on this shared time\ 
+    df = df.drop_duplicates()
+    return df
+
+
 def define_indicators_features(MES):
     # series
     MD = MACD( MES, 12, 26, 9)
@@ -283,3 +284,9 @@ def define_indicators_features(MES):
     MES = COPP(MES, period=14)
     return  MES
     
+# get sample data range
+
+data = pd.read_csv("MES 06-21.Last.txt", names=['time', 'open', 'high', 'low', 'close', 'volume'], 
+                   delimiter = ";", index_col='time')[-3000:]
+
+define_indicators_features(data)
