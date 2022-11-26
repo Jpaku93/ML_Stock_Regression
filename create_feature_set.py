@@ -239,6 +239,12 @@ def COPP(data, period=14):
     data['COPP'] = pd.Series(ROC1 + ROC2, name='COPP').ewm(span=10, min_periods=9).mean()
     return data
 
+def call_data(URL): ## function to call data TXT FILE
+    data = pd.read_csv(URL, names=['time', 'open', 'high', 'low', 'close', 'volume'], delimiter = ";", index_col='time')
+    data = data.drop_duplicates()
+    return data
+
+
 def define_indicators_features(MES):
     # series
     MD = MACD( MES, 12, 26, 9)
@@ -275,4 +281,3 @@ def define_indicators_features(MES):
     MES = ULTOSC(MES)
     MES = COPP(MES, period=14)
     return  MES
-
