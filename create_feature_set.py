@@ -283,6 +283,3 @@ def define_indicators_features(MES):
     MES = COPP(MES, period=14)
     return  MES
     
-# get sample data range
-data = call_data()[-300:]
-define_indicators_features(data)
