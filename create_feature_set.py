@@ -4,7 +4,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 
 def get_data(url):
-    df = pd.read_csv(url, names=['time', 'open', 'high', 'low', 'close', 'volume'], delimiter = ";",)
+    pd.read_csv(url, names=['time', 'open', 'high', 'low', 'close', 'volume'], delimiter = ";", index_col='time')
     df.time = pd.to_datetime(df.time, format = '%Y.%m.%d %H:%M:%S.%f')
     df.set_index("time", inplace=True)  # set time as index so we can join them on this shared time\ 
     df = df.drop_duplicates()
