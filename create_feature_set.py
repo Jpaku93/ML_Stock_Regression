@@ -239,10 +239,8 @@ def COPP(data, period=14):
     data['COPP'] = pd.Series(ROC1 + ROC2, name='COPP').ewm(span=10, min_periods=9).mean()
     return data
 
-def call_data(URL): ## 
-    df = pd.read_csv(URL, names=['time', 'open', 'high', 'low', 'close', 'volume'], delimiter = ";",)
-    df.time = pd.to_datetime(df.time, format = '%Y.%m.%d %H:%M:%S.%f')
-    df.set_index("time", inplace=True)  # set time as index so we can join them on this shared time\ 
+def call_data(URL): ## function to call data TXT FILE
+    data = pd.read_csv(URL, names=['time', 'open', 'high', 'low', 'close', 'volume'], delimiter = ";", index_col='time')
     df = df.drop_duplicates()
     return df
 
