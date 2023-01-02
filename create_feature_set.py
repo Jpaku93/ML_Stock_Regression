@@ -245,7 +245,8 @@ def call_data(URL): ## function to call data TXT FILE
     return data
 
 
-def define_indicators_features(MES):
+def define_indicators_features(df):
+    MES = df.copy()
     # series
     MD = MACD( MES, 12, 26, 9)
     for i in MD.iloc[:,-4:].columns:
